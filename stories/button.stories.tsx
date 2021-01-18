@@ -10,26 +10,69 @@ import { Ionicons } from "@expo/vector-icons";
 storiesOf("Button", module)
   .addDecorator(BufferView)
   .add("default", () => {
-    return <Button onPress={action("tap-default")}>Press Me</Button>;
+    return <Button onPress={action("tap-default")}>Default</Button>;
   })
   .add("outline", () => {
     return (
       <Button isFullWidth onPress={action("tap-outline")} outline>
-        Click me!
+        Outline
       </Button>
     );
   })
   .add("leftIconButton", () => {
     return (
       <Button
-        primary
         bgColor={"teal"}
         _pressed={{ backgroundColor: "black", opacity: 0.8 }}
         isFullWidth
-        leftIcon={<Ionicons name="rocket" size={30} color={'white'} />}
+        leftIcon={<Ionicons name="rocket" size={30} color={"white"} />}
       >
-        {" "}
-        Press me!{" "}
+        Rocket!
+      </Button>
+    );
+  })
+  .add("rightIconButton", () => {
+    return (
+      <Button
+        bgColor={"teal"}
+        _pressed={{ backgroundColor: "black", opacity: 0.8 }}
+        isFullWidth
+        rightIcon={<Ionicons name="rocket" size={30} color={"white"} />}
+      >
+        Right Rocket!
+      </Button>
+    );
+  })
+  .add("primary-button", () => {
+    return (
+      <Button
+        primary
+        _pressed={{ backgroundColor: "black", opacity: 0.8 }}
+        isFullWidth
+      >
+        Primary
+      </Button>
+    );
+  })
+  .add("success-button", () => {
+    return (
+      <Button
+        success
+        _pressed={{ backgroundColor: "black", opacity: 0.8 }}
+        isFullWidth
+      >
+        Primary
+      </Button>
+    );
+  })
+  .add("danger-button", () => {
+    return (
+      <Button
+        danger
+        _pressed={{ backgroundColor: "black", opacity: 0.8 }}
+        isFullWidth
+      >
+        Danger
       </Button>
     );
   });

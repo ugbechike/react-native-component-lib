@@ -1,6 +1,5 @@
 import React, { ReactNode, useState } from "react";
 import {
-  TouchableOpacity,
   Pressable,
   Text,
   StyleSheet,
@@ -8,11 +7,9 @@ import {
   GestureResponderEvent,
   View,
 } from "react-native";
-// import { color } from "@storybook/addon-knobs";
 import colors from "../config/colors";
-// import { action } from "@storybook/addon-actions";
-// import { mergeWith } from "@chakra-ui/utils";
 import { mergeWith } from "lodash"
+
 
 interface ButtonPropsType extends TouchableOpacityProps {
   children: React.ReactNode;
@@ -24,7 +21,10 @@ interface ButtonPropsType extends TouchableOpacityProps {
   bgColor?: string;
   primary?: boolean;
   success?: boolean;
+  danger?: boolean;
   _pressed?: any;
+  _disabled?: any;
+  rightIcon?: any;
 }
 
 export type FunctionArguments<T extends Function> = T extends (
@@ -51,11 +51,14 @@ export const Button = (props: ButtonPropsType) => {
     children,
     outline = false,
     leftIcon,
+    rightIcon,
     isFullWidth,
     bgColor,
     primary,
     success,
     _pressed,
+    _disabled,
+    danger,
     ...rest
   } = props;
 
@@ -65,54 +68,58 @@ export const Button = (props: ButtonPropsType) => {
   };
 
   let buttonStyle: any = styles.buttonContainer;
-  const textStyle: any = [styles.text];
+  let textStyle: any = styles.text;
 
   if (outline) {
     buttonStyle = mergeWith({}, buttonStyle, styles.buttonOutline);
-    textStyle.push(styles.textOutline);
+    textStyle = mergeWith({}, textStyle, styles.textOutline)
+    // textStyle.push(styles.textOutline);
   }
 
   if (leftIcon) {
     buttonStyle = mergeWith({}, buttonStyle, styles.buttonLeftIcon);
+  }
 
-    // buttonStyle.push(styles.buttonLeftIcon);
+  if (rightIcon) {
+    buttonStyle = mergeWith({}, buttonStyle, styles.buttonLeftIcon);
   }
 
   if (isFullWidth) {
-    mergeWith(buttonStyle, styles.buttonFullWidth);
-    // buttonStyle.push(styles.buttonFullWidth);
+    buttonStyle = mergeWith({}, buttonStyle, styles.buttonFullWidth);
   }
 
   if (bgColor) {
-    mergeWith(buttonStyle, customBgColorStyle);
-    // buttonStyle.push(customBgColorStyle);
+    buttonStyle = mergeWith(buttonStyle, customBgColorStyle);
   }
 
   if (primary) {
     customBgColorStyle.backgroundColor = "blue";
     customBgColorStyle.borderColor = "blue";
-    mergeWith(buttonStyle, customBgColorStyle);
+    textStyle = mergeWith({}, textStyle, styles.primaryBtnText);
+    buttonStyle = mergeWith({}, buttonStyle, customBgColorStyle);
+  }
 
-    // buttonStyle.push(customBgColorStyle);
+  if (danger) {
+    customBgColorStyle.backgroundColor = "red"; //todo work on themes
+    customBgColorStyle.borderColor = "red";
+    textStyle = mergeWith({}, textStyle, styles.primaryBtnText);
+    buttonStyle = mergeWith({}, buttonStyle, customBgColorStyle);
   }
 
   if (success) {
     customBgColorStyle.backgroundColor = "green"; // todo find color codes
     customBgColorStyle.borderColor = "green";
-    mergeWith(buttonStyle, customBgColorStyle);
-
-    // buttonStyle.push(customBgColorStyle);
+    buttonStyle = mergeWith({}, buttonStyle, customBgColorStyle);
   }
 
   const [pressed, setPressed] = useState<boolean>(false);
 
-  const _handlePressAll = (arg1: any, arg2: any) => {
-    // alert('hello');
-    setPressed(true);
-  };
-
   let merge = mergeWith({}, buttonStyle, pressed ? _pressed : {});
   // console.warn("......", merge);
+
+  if (_disabled) {
+    merge = mergeWith({}, buttonStyle, _disabled);
+  }
 
   return (
     <Pressable
@@ -123,6 +130,7 @@ export const Button = (props: ButtonPropsType) => {
     >
       {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
       <Text style={textStyle}>{children}</Text>
+      {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
     </Pressable>
   );
 };
@@ -156,10 +164,19 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   leftIcon: {
-    marginRight: 10,
+    marginEnd: 10,
     color: 'white'
   },
+
+  rightIcon: {
+    marginStart: 10,
+    color: 'white',
+  },
+
   buttonFullWidth: {
     width: "100%",
   },
+  primaryBtnText: {
+    color: 'white'
+  }
 });

@@ -72,7 +72,19 @@ storiesOf("Button", module)
         _pressed={{ backgroundColor: "black", opacity: 0.8 }}
         isFullWidth
       >
-        Danger
+        Danger Button
+      </Button>
+    );
+  })
+  .add("rounded-button", () => {
+    return (
+      <Button
+        rounded
+        danger
+        _pressed={{ backgroundColor: "black", opacity: 0.8 }}
+        // isFullWidth
+      >
+        <Ionicons name="rocket" size={30} color={"white"} />
       </Button>
     );
   });

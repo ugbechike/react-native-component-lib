@@ -8,8 +8,7 @@ import {
   View,
 } from "react-native";
 import colors from "../config/colors";
-import { mergeWith } from "lodash"
-
+import { mergeWith } from "lodash";
 
 interface ButtonPropsType extends TouchableOpacityProps {
   children: React.ReactNode;
@@ -22,25 +21,26 @@ interface ButtonPropsType extends TouchableOpacityProps {
   primary?: boolean;
   success?: boolean;
   danger?: boolean;
+  rounded?: boolean;
   _pressed?: any;
   _disabled?: any;
   rightIcon?: any;
 }
 
 export type FunctionArguments<T extends Function> = T extends (
-    ...args: infer R
-    ) => any
-    ? R
-    : never
+  ...args: infer R
+) => any
+  ? R
+  : never;
 
-export type AnyFunction<T = any> = (...args: T[]) => any
+export type AnyFunction<T = any> = (...args: T[]) => any;
 
 export function callAll<T extends AnyFunction>(...fns: (T | undefined)[]) {
   return function mergedFn(arg: FunctionArguments<T>[0]) {
     fns.forEach((fn) => {
-      fn?.(arg)
-    })
-  }
+      fn?.(arg);
+    });
+  };
 }
 
 // todo think of a better way to handle the if statements
@@ -58,6 +58,7 @@ export const Button = (props: ButtonPropsType) => {
     success,
     _pressed,
     _disabled,
+    rounded,
     danger,
     ...rest
   } = props;
@@ -72,7 +73,7 @@ export const Button = (props: ButtonPropsType) => {
 
   if (outline) {
     buttonStyle = mergeWith({}, buttonStyle, styles.buttonOutline);
-    textStyle = mergeWith({}, textStyle, styles.textOutline)
+    textStyle = mergeWith({}, textStyle, styles.textOutline);
     // textStyle.push(styles.textOutline);
   }
 
@@ -82,6 +83,10 @@ export const Button = (props: ButtonPropsType) => {
 
   if (rightIcon) {
     buttonStyle = mergeWith({}, buttonStyle, styles.buttonLeftIcon);
+  }
+
+  if (rounded) {
+    buttonStyle = mergeWith({}, buttonStyle, styles.roundedButton);
   }
 
   if (isFullWidth) {
@@ -138,11 +143,11 @@ export const Button = (props: ButtonPropsType) => {
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: colors.primary,
-    paddingVertical: 14,
+    paddingVertical: 10,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: colors.primary,
-    width: "50%",
+    width: "30%",
   },
   buttonOutline: {
     backgroundColor: "transparent",
@@ -165,18 +170,23 @@ const styles = StyleSheet.create({
   },
   leftIcon: {
     marginEnd: 10,
-    color: 'white'
+    color: "white",
   },
 
   rightIcon: {
     marginStart: 10,
-    color: 'white',
+    color: "white",
   },
 
   buttonFullWidth: {
     width: "100%",
   },
+
+  roundedButton: {
+    borderRadius: 15,
+  },
+
   primaryBtnText: {
-    color: 'white'
-  }
+    color: "white",
+  },
 });

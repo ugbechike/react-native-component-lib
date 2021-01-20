@@ -13,6 +13,7 @@ addDecorator(withKnobs);
 configure(() => {
   // require('./stories');
   require('../stories/button.stories');
+  require('../stories/card.stories');
 }, module);
 
 // Refer to https://github.com/storybookjs/storybook/tree/master/app/react-native#start-command-parameters

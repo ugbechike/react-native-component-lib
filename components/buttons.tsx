@@ -10,6 +10,7 @@ import {
 import colors from "../config/colors";
 import { mergeWith } from "lodash";
 
+// todo add a transparent button props
 interface ButtonPropsType extends TouchableOpacityProps {
   children: React.ReactNode;
   onPressOut?: (event: GestureResponderEvent) => void;

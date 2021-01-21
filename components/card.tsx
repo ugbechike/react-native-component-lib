@@ -13,15 +13,14 @@ export const Card = (props: CardPropsType) => {
 
 const styles = StyleSheet.create({
    cardContainer: {
-       borderWidth: 1,
-       borderRadius: 2,
+       // borderWidth: 1,
+       borderRadius: 5,
        borderColor: '#ccc',
-       paddingVertical: 14,
-       paddingHorizontal: 14,
+       backgroundColor: '#fff',
        shadowColor: '#000',
-       shadowOffset: { width: 0, height: 2 },
-       shadowOpacity: 0.1,
+       shadowOffset: { width: 0, height: 0.5 },
+       shadowOpacity: 0.3,
        shadowRadius: 1.5,
-       elevation: 3
+       elevation: 30
    }
 });
